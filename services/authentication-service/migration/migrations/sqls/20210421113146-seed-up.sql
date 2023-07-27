@@ -22,7 +22,7 @@ values
 
 insert into users
 (first_name, last_name, username, email, default_tenant_id)
-select 'Demo', 'Doctor', 'test.doctor@arc.com', 'test.doctor@arc.com', id from tenants where key = 'master' ;
+select 'Demo', 'Doctor', 'test.doctor@sourcefuse.com', 'test.doctor@sourcefuse.com', id from tenants where key = 'master' ;
 insert into user_tenants
 (user_id, tenant_id, status, role_id)
 select (select id from users where username = 'test.doctor@arc.com'), (select id from tenants where key = 'master'), 1, id from roles where role_type = 0;
@@ -38,7 +38,7 @@ values
 
 insert into users
 (first_name, last_name, username, email, default_tenant_id)
-select 'Demo', 'Patient', 'test.patient@arc.com', 'test.patient@arc.com', id from tenants where key = 'master' ;
+select 'Demo', 'Patient', 'test.patient@sourcefuse.com', 'test.patient@sourcefuse.com', id from tenants where key = 'master' ;
 insert into user_tenants
 (user_id, tenant_id, status, role_id)
 select (select id from users where username = 'test.patient@arc.com'), (select id from tenants where key = 'master'), 1, id from roles where role_type = 1;
