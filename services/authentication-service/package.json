@@ -63,6 +63,7 @@
     "!*/__tests__"
   ],
   "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.379.1",
     "@loopback/boot": "^5.0.1",
     "@loopback/context": "^5.0.1",
     "@loopback/core": "^4.0.1",

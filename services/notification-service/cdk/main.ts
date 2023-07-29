@@ -67,28 +67,46 @@ new LambdaStack(app, "lambda", {// NOSONAR
   },
   memorySize: 256,
   timeout: 30,
-  envVars: {
-    DB_HOST: process.env.DB_HOST || "",
-    DB_PORT: process.env.DB_PORT || "",
-    DB_USER: process.env.DB_USER || "",
-    DB_PASSWORD: process.env.DB_PASSWORD || "",
-    DB_DATABASE: process.env.DB_DATABASE || "",
-    DB_SCHEMA: process.env.DB_SCHEMA || "",
-    JWT_SECRET: process.env.JWT_SECRET || "",
-    JWT_ISSUER: "sourcefuse",
-    PORT: "3005",
-    LOG_LEVEL: "info",
-    DB_CONNECTOR: "postgresql",
-    PUBNUB_SUBSCRIBE_KEY: "sub-c-289ccd94-4b30-4717-bd00-d75e10f07f10",
-    PUBNUB_PUBLISH_KEY: 'pub-c-d6b50755-2212-48ec-99da-38ecc57c31d4',
-    PUBNUB_SECRET_KEY: "sec-c-MDI0ZjBhNGQtNTExOC00ZGFhLWExZGMtNDk5YTY0NTI5YmM0",
-  },
   customDomainName: {
     domainName: process.env.DOMAIN_NAME || "",
     hostedZoneId: process.env.HOSTED_ZONE_ID || "",
   },
   namespace: process.env.NAMESPACE || "",
   environment: process.env.ENV || "",
+  createRole: { iamPolicy:JSON.stringify( {
+    Version: "2012-10-17",
+    Statement: [
+      {
+        Effect: "Allow",
+        Action: [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "ec2:CreateNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DeleteNetworkInterface",
+          "ec2:AssignPrivateIpAddresses",
+          "ec2:UnassignPrivateIpAddresses",
+          "secretsmanager:GetSecretValue",
+        ],
+        Resource: "*",
+      },
+    ],
+  }),
+  iamRole: JSON.stringify({
+    Version: "2012-10-17",
+    Statement: [
+      {
+        Action: "sts:AssumeRole",
+        Principal: {
+          Service: "lambda.amazonaws.com",
+        },
+        Effect: "Allow",
+        Sid: "",
+      },
+    ],
+  })
+ }
 });
 
 app.synth();

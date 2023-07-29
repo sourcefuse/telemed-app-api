@@ -1,10 +1,12 @@
-import {ApplicationConfig, NotificationApplication} from './application';
+import { getSecretValue } from './config';
+// import  from './application';
 
 export * from './application';
 
 const PORT = 3000;
 
-export async function main(options: ApplicationConfig = {}) {
+export async function main(options: any = {}) {
+  const {NotificationApplication} =require('./application');
   const app = new NotificationApplication(options);
   await app.boot();
   await app.start();
@@ -34,8 +36,11 @@ if (require.main === module) {
       },
     },
   };
-  main(config).catch(err => {
-    console.error('Cannot start the application.', err);
-    process.exit(1);
-  });
+  getSecretValue().then(res=>{
+    Object.assign(process.env,res);    
+    main(config).catch(err => {
+      console.error('Cannot start the application.', err); // NOSONAR
+      process.exit(1);
+    });
+  })
 }

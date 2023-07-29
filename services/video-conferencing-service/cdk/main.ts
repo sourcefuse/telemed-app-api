@@ -67,27 +67,46 @@ new LambdaStack(app, "lambda", {// NOSONAR
   },
   memorySize: 256,
   timeout: 30,
-  envVars: {
-    DB_HOST: process.env.DB_HOST || "",
-    DB_PORT: process.env.DB_PORT || "",
-    DB_USER: process.env.DB_USER || "",
-    DB_PASSWORD: process.env.DB_PASSWORD || "",
-    DB_DATABASE: process.env.DB_DATABASE || "",
-    DB_SCHEMA: process.env.DB_SCHEMA || "",
-    JWT_SECRET: process.env.JWT_SECRET || "",
-    JWT_ISSUER: "sourcefuse",
-    PORT: "3005",
-    LOG_LEVEL: "info",
-    DB_CONNECTOR: "postgresql",
-    VONAGE_API_KEY: "47748051",
-    VONAGE_API_SECRET: "6314d3cb6972230d20e779431ceade797ba6fd89"
-  },
   customDomainName: {
     domainName: process.env.DOMAIN_NAME || "",
     hostedZoneId: process.env.HOSTED_ZONE_ID || "",
   },
   namespace: process.env.NAMESPACE || "",
   environment: process.env.ENV || "",
+  createRole: { iamPolicy:JSON.stringify( {
+    Version: "2012-10-17",
+    Statement: [
+      {
+        Effect: "Allow",
+        Action: [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "ec2:CreateNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DeleteNetworkInterface",
+          "ec2:AssignPrivateIpAddresses",
+          "ec2:UnassignPrivateIpAddresses",
+          "secretsmanager:GetSecretValue",
+        ],
+        Resource: "*",
+      },
+    ],
+  }),
+  iamRole: JSON.stringify({
+    Version: "2012-10-17",
+    Statement: [
+      {
+        Action: "sts:AssumeRole",
+        Principal: {
+          Service: "lambda.amazonaws.com",
+        },
+        Effect: "Allow",
+        Sid: "",
+      },
+    ],
+  })
+ }
 });
 
 app.synth();
