@@ -1,17 +1,20 @@
-import {ApplicationConfig, VideoConferencingApplication} from './application';
-
+import { getSecretValue } from './config';
 export * from './application';
 
 const PORT = 3000;
 
-export async function main(options: ApplicationConfig = {}) {
+export async function main(options: any = {}) {
+
+  const {
+    VideoConferencingApplication,
+    }=require('./application');
   const app = new VideoConferencingApplication(options);
   await app.boot();
   await app.start();
 
   const url = app.restServer.url;
-  console.log(`Server is running at ${url}`);
-  console.log(`Try ${url}/ping`);
+  console.log(`Server is running at ${url}`); // NOSONAR
+  console.log(`Try ${url}/ping`); // NOSONAR
 
   return app;
 }
@@ -34,8 +37,13 @@ if (require.main === module) {
       },
     },
   };
-  main(config).catch(err => {
-    console.error('Cannot start the application.', err);
-    process.exit(1);
-  });
+
+  getSecretValue().then(res=>{
+    Object.assign(process.env,res);    
+    main(config).catch(err => {
+      console.error('Cannot start the application.', err); // NOSONAR
+      process.exit(1);
+    });
+  })
+  
 }

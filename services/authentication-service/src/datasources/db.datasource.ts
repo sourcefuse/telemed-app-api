@@ -14,6 +14,8 @@ const config = {
   schema:process.env.DB_SCHEMA,
 };
 
+
+
 // Observe application's life cycle to disconnect the datasource when
 // application is stopped. This allows the application to be shut down
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.

@@ -1,11 +1,12 @@
+import { getSecretValue } from './config';
 import {APIGatewayEvent, APIGatewayProxyEvent, Context} from 'aws-lambda';
-import {NotificationApplication} from './application';
 const serverlessExpress = require('@vendia/serverless-express');
 
 export * from './application';
 let serverlessApp: (arg0: APIGatewayProxyEvent, arg1: Context) => any; // NOSONAR
 
 export async function setup(event: APIGatewayEvent, context: Context) {
+  const {NotificationApplication} =require('./application');
   const config = {
     rest: {
       openApiSpec: {
@@ -20,9 +21,11 @@ export async function setup(event: APIGatewayEvent, context: Context) {
   return serverlessApp(event, context);
 }
 
-export const handler = (event: APIGatewayEvent, context: Context) => {
+export const handler =async (event: APIGatewayEvent, context: Context) => {
   if (serverlessApp) {
     return serverlessApp(event, context);
   }
+  let secret=await getSecretValue();
+  Object.assign(process.env,secret);
   return setup(event, context);
 };
