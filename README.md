@@ -20,7 +20,7 @@ This repository contains the code for various backend micro-services used in the
 ## How to Use
 
 - Scaffold the `telemed-app-api` template from backstage.
-- Step into the folder and run `npm i` to install node_modules (and to create envs).
+- Step into the folder and run `npm i` to install node_modules.
 - Run `npx lerna bootstrap` to install dependencies of all the services.
 - To run any service locally, step into the service folder and update required values in AWS secret manager beforehand.
 - Run `npm start` to start the development server.
