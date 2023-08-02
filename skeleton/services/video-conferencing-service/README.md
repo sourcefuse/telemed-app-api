@@ -28,6 +28,21 @@ You can also run `node .` to skip the build step.
 Open http://127.0.0.1:3000 in your browser.
 
 
+## How to Deploy
+
+To deploy this service on AWS lambda, refer the following steps, ensure that you're in the `video-conferencing-service` directory:
+
+1. Run `npm run build` to generate the code build
+2. Run `npm run build:layers` to generate the node_modules as lambda layers
+3. Run `npm run build:migrations` to install dependencies as layers for database migration code which will be deployed as a separate lambda function.
+4. We can choose to skip running commands mentioned in step 1-3 and directly run `npm run build:all` to build the lambda layers, code build and migrations for the service
+5. Step into cdk folder inside the service and update the `.env` file (make sure upstream dependencies like PostgreSQL DB are already setup and the database is created).
+6. Run `npx cdktf deploy migration` to deploy the migration lambda on AWS using terraform constructs.
+7. Run `npx cdktf deploy lambda` to deploy the service lambda on AWS using terraform constructs.
+
+For more information on the steps and environment variable needed for CDK to run [check this](./cdk/README.md).
+
+
 ## Environment Variables
 
 This service picks up environment variables from AWS Secrets Manager, To run the service successfully, you need to set up the following environment variables the in secrets manager with the secret named `telemed-app-service-video-conferencing`, or you can customize this name by modifying `config.ts` inside `src` folder.
