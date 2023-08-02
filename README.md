@@ -37,7 +37,7 @@ To deploy the service on AWS lambda, refer the following steps after stepping in
 6. Run `npx cdktf deploy migration` to deploy the migration lambda on AWS using terraform constructs.
 7. Run `npx cdktf deploy lambda` to deploy the service lambda on AWS using terraform constructs.
 
-For more information on deployement and environment variable of specific service refer the "How to Deploy" section in respective service's README.
+For more information on deployment and environment variable of specific service refer the "How to Deploy" section in respective service's README.
 
 ## References
 
