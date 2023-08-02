@@ -1,12 +1,13 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name:  telemed-app-api
-  title: telemed-app-api
-  description: Create a new telemed app
+  name: telemed-app-api
+  title: Telemedicine App API Template
+  description: Create ARC API based monorepo for Telemedicine Project.
   tags:
     - telemed
     - backend
+    - arc-api
 spec:
   owner: sourcefuse.com
   type: website
