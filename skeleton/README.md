@@ -1,135 +1,53 @@
-# telemed-app-api
-
+# Telemed App API
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-## Getting Started
+The ARC Telemedicine App is a proof-of-concept application that enables seamless communication between doctors and patients through video calls and chat. The app aims to provide a virtual healthcare solution, allowing medical professionals to conduct remote consultations and provide personalized care to patients from the comfort of their own homes in real time.
 
-We develop all microservices in the same repository using monorepo concept. To setup the base of the project we are using [Lerna](https://github.com/lerna/lerna). Lerna is useful to manage monorepos.
+This repository contains the code for various backend micro-services used in the Telemed App. You have the option to run these services locally or deploy them on AWS Lambda with API Gateway.
 
-## Developing
+# Services Included
+- [Authentication Service](./services/authentication-service)
+- [Notification Service](./services/notification-service)
+- [Video Conferencing Service](./services/video-conferencing-service)
 
-For development guidelines, refer [here](https://github.com/sourcefuse/biz-book-api/tree/master/DEVELOPING.md)
+## <a id="prereqs"></a> Pre-Requisites
 
-## Commit message guidelines
+- [node.js](https://nodejs.dev/download/)
+- [npm](https://docs.npmjs.com/cli/v6/commands/npm-install)
+- [aws-cli](https://aws.amazon.com/cli/)
+- [Terraform](https://www.terraform.io/)
+- [cdktf-cli](https://www.npmjs.com/package/cdktf-cli)
 
-A good commit message should describe what changed and why.
 
-Our commit messages are formatted according to
-[Conventional Commits](https://conventionalcommits.org/), we use
-[commitlint](https://github.com/marionebl/commitlint) to verify and enforce this
-convention. These rules lead to more readable messages that are easy to follow
-when looking through the project history. But also, we use the git commit
-messages to generate change logs when publishing new versions.
+## How to Use
 
-### Commit Message Format
+- Scaffold the `telemed-app-api` template from backstage.
+- Step into the folder and run `npm i` to install node_modules (and to create envs).
+- Run `npx lerna bootstrap` to install dependencies of all the services.
+- To run any service locally, step into the service folder and update required values in AWS secret manager beforehand.
+- Run `npm start` to start the development server.
 
-Each commit message consists of a **header**, a **body** and a **footer**. The
-header has a special format that includes a **type**, an optional **scope** and
-a **subject**:
+## How to Deploy
 
-```text
-<type>(<scope>): <subject>
-<BLANK LINE>
-<body>
-<BLANK LINE>
-<footer>
-```
+To deploy service on AWS lambda :
 
-#### type
+1. Run `npm run build` to generate the code build
+2. Run `npm run build:layers` to generate the node_modules as lambda layers
+3. Run `npm run build:migrations` to install dependencies as layers for database migration code which will be deployed as a separate lambda function.
+4. We can choose to skip running commands mentioned in step 1-3 and directly run `npm run build:all` to build the lambda layers, code build and migrations for the service
+5. Step into cdk folder inside the service and update the .env file (Make sure upstream dependencies like PostgreSQL DB are already setup).
+6. Run `npx cdktf deploy migration` to deploy the migration lambda on AWS using terraform constructs.
+7. Run `npx cdktf deploy lambda` to deploy the service lambda on AWS using terraform constructs.
 
-The **type** must be one of the following:
+## References
 
-- **feat**: A new feature
-- **fix**: A bug fix
-- **docs**: Documentation only changes
-- **style**: Changes that do not affect the meaning of the code (white-space,
-  formatting, missing semi-colons, etc)
-- **refactor**: A code change that neither fixes a bug nor adds a feature
-- **perf**: A code change that improves performance
-- **test**: Adding missing or correcting existing tests
-- **build**: Changes that affect the build system or external dependencies
-- **ci**: Changes to our CI configuration files and scripts
-- **chore**: Changes to the auxiliary tools and libraries such as documentation
-  generation
-- **revert**: Reverts a previous commit
+At ARC, our mission is to empower developers and organizations by providing seamless solutions for developing and deploying applications, both on the backend and frontend. We are committed to ensuring that every aspect of app development adheres to the highest security and industry standards, ensuring a smooth and secure user experience.
 
-#### scope
+As part of our commitment to the open-source community, we actively contribute to a range of projects, some of which include:
 
-The **scope** must be a list of one or more packages contained in this monorepo.
-Each scope name must match a directory name in
-[packages/](https://github.com/sourcefuse/biz-book-api/tree/master/packages),
-e.g. `core` or [services/](https://github.com/sourcefuse/biz-book-api/tree/master/services).
-
-_Note: If multiple packages are affected by a pull request, don't list the
-scopes as the commit linter currently only supports only one scope being listed
-at most._
-
-#### subject
-
-The **subject** contains succinct description of the change:
-
-- use the imperative, present tense: "change" not "changed" nor "changes"
-- don't capitalize first letter
-- no dot (.) at the end
-
-#### body
-
-The **body** provides more details, it should include the motivation for the
-change and contrast this with previous behavior.
-
-Just as in the subject, use the imperative, present tense: "change" not
-"changed" nor "changes"a
-
-Paragraphs or bullet points are ok (must not exceed 100 characters per line).
-Typically a hyphen or asterisk is used for the bullet, followed by a single
-space, with blank lines in between.
-
-#### references
-
-Its mandatory to add references to JIRA ticket you are resolving as part of the commit.
-
-#### footer (optional)
-
-The **footer** should contain any information about Breaking Changes introduced
-by this commit.
-
-This section must start with the upper case text `BREAKING CHANGE` followed by a
-colon (`:`) and a space (``). A description must be provided, describing what
-has changed and how to migrate from older versions.
-
-### Tools to help generate a commit message
-
-This repository has [commitizen](https://github.com/commitizen/cz-cli) support
-enabled. Commitizen can help you generate your commit messages automatically.
-
-And to use it, simply call `git commit`. The tool will help
-you generate a commit message that follows the above guidelines.
-
-## Releases
-
-We are using semantic versioning so, the release management and tagging is automated based on that.
-
-Since, we are using a monorepo with lerna, each microservice will have independent versioning and release. For identifying which services changed in any build cycle and deploy only those services using CI/CD pipeline, use the below commands in order.
-
-```sh
-lerna changed -p --toposort --loglevel silent
-```
-
-This will give modified services for selective deployment. This needs to be done at beginning of CD process. This will skip migrations. So that needs to be run everytime. `lerna run db:migrate` .
-
-Alternatively, We can also use `--since {commit-hash}` flag with `lerna run` command to let lerna know that execute the command only in the services which have changed since the commit hash provided.
-
-Command for releasing tags
-
-Pre-release
-
-```sh
-HUSKY_SKIP_HOOKS=1 lerna version --conventional-commits --conventional-prerelease
-```
-
-Release
-
-```sh
-HUSKY_SKIP_HOOKS=1 lerna version --conventional-commits --conventional-graduate
-```
+- [ARC Docs](https://sourcefuse.github.io/arc-docs)
+- [ARC API](https://github.com/sourcefuse/loopback4-microservice-catalog/)
+- [ARC Lambda](https://github.com/sourcefuse/arc-lambda)
+- [ARC IaC](https://sourcefuse.github.io/arc-docs/arc-iac-docs/)
+- [ARC React Boilerplate](https://github.com/sourcefuse/react-boilerplate-ts-ui/)
