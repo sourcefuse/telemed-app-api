@@ -37,6 +37,8 @@ To deploy the service on AWS lambda, refer the following steps after stepping in
 6. Run `npx cdktf deploy migration` to deploy the migration lambda on AWS using terraform constructs.
 7. Run `npx cdktf deploy lambda` to deploy the service lambda on AWS using terraform constructs.
 
+For more information on deployement of specific service refer the "How to Deploy" section in respective service's README.
+
 ## References
 
 At ARC, our mission is to empower developers and organizations by providing seamless solutions for developing and deploying applications, both on the backend and frontend. We are committed to ensuring that every aspect of app development adheres to the highest security and industry standards, ensuring a smooth and secure user experience.
