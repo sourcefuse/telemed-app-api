@@ -27,7 +27,7 @@ This repository contains the code for various backend micro-services used in the
 
 ## How to Deploy
 
-To deploy service on AWS lambda :
+To deploy the service on AWS lambda, refer the following steps after stepping into the service folder you want to deploy:
 
 1. Run `npm run build` to generate the code build
 2. Run `npm run build:layers` to generate the node_modules as lambda layers
