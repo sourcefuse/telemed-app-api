@@ -1,7 +1,6 @@
-# authenticationservice
+# Telemed Authentication Service
 
-This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the
-[initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
+This application is generated using ARC CLI, serves as the Authentication Microservice for the Telemedicine Application.
 
 ## Install dependencies
 
@@ -27,6 +26,23 @@ npm start
 You can also run `node .` to skip the build step.
 
 Open http://127.0.0.1:3000 in your browser.
+
+
+## Environment Variables
+
+This service picks up environment variables from AWS Secrets Manager, To run the service successfully, you need to set up the following environment variables the in secrets manager with the secret named `telemed-app-service-authentication`, or you can customize this name by modifying `config.ts` inside `src` folder.
+
+
+| Environment Variable      | Description                                                   |
+| ------------------------- | ------------------------------------------------------------- |
+| DB_HOST                   | The hostname of the database.                                 |
+| DB_USER                   | The username of the database.                                 |
+| DB_PASSWORD               | The password of the database.                                 |
+| DB_DATABASE               | The name of the database.                                     |
+| DB_SCHEMA                 | The schema of the postgres database to use.                   |
+| JWT_SECRET                | JWT Secret to sign bearer tokens.                             |
+| JWT_ISSUER                | The isser for the JWT token.                                  |
+
 
 ## Rebuild the project
 
