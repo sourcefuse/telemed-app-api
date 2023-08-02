@@ -20,7 +20,7 @@ This repository contains the code for various backend micro-services used in the
 ## How to Use
 
 - Scaffold the `telemed-app-api` template from backstage.
-- Step into the folder and run `npm i` to install node_modules.
+- Step into the folder and run `npm i` to install packages.
 - Run `npx lerna bootstrap` to install dependencies of all the services.
 - To run any service locally, step into the service folder and update required values in AWS secret manager beforehand.
 - Run `npm start` to start the development server.
@@ -37,7 +37,7 @@ To deploy the service on AWS lambda, refer the following steps after stepping in
 6. Run `npx cdktf deploy migration` to deploy the migration lambda on AWS using terraform constructs.
 7. Run `npx cdktf deploy lambda` to deploy the service lambda on AWS using terraform constructs.
 
-For more information on deployement of specific service refer the "How to Deploy" section in respective service's README.
+For more information on deployement and environment variable of specific service refer the "How to Deploy" section in respective service's README.
 
 ## References
 
