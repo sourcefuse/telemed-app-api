@@ -28,7 +28,7 @@
     "arc-cdk": "^0.0.3",
     "cdktf": "^0.15.0",
     "cdktf-cli": "^0.15.5",
-    "constructs": "^10.1.229",
+    "constructs": "^10.3.0",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0"
   },
