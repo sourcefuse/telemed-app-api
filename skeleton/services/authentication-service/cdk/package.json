@@ -29,7 +29,7 @@
     "cdktf": "^0.15.0",
     "cdktf-cli": "^0.15.5",
     "constructs": "^10.1.229",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.4.5",
     "dotenv-extended": "^2.9.0"
   },
   "devDependencies": {
