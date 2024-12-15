@@ -69,7 +69,7 @@
     "@loopback/core": "^4.0.1",
     "@loopback/openapi-v3": "^8.0.1",
     "@loopback/repository": "^5.0.1",
-    "@loopback/rest": "^12.0.1",
+    "@loopback/rest": "^14.0.9",
     "@loopback/rest-explorer": "^5.0.1",
     "@loopback/service-proxy": "^5.0.1",
     "@sourceloop/audit-log": "^3.2.2",
