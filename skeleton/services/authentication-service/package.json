@@ -72,7 +72,7 @@
     "@loopback/rest": "^12.0.1",
     "@loopback/rest-explorer": "^5.0.1",
     "@loopback/service-proxy": "^5.0.1",
-    "@sourceloop/audit-log": "^3.2.2",
+    "@sourceloop/audit-log": "^8.0.4",
     "@sourceloop/authentication-service": "10.0.0",
     "@sourceloop/core": "^7.0.1",
     "@types/aws-lambda": "^8.10.110",
